@@ -65,8 +65,10 @@ public class SettingsActivity extends Activity {
                 if(isChecked){
                     k.KillCamera();
                     k.createCache(killer.CacheSelect.camera);
-                }else
+                }else{
+		    k.FixCamera();
                     k.deleteCache(killer.CacheSelect.camera);
+		}
 
             }
         });
@@ -86,8 +88,10 @@ public class SettingsActivity extends Activity {
                 if(isChecked){
                     k.KillMicro();
                     k.createCache(killer.CacheSelect.micro);
-                }else
+                }else{
                     k.deleteCache(killer.CacheSelect.micro);
+		    k.FixMicro();
+		}
             }
         });
         startonboot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

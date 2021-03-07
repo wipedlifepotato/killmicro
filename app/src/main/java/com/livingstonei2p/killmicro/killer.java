@@ -15,18 +15,31 @@ public class killer {
     private final String
         microCacheString = "/microCache",
             cameraCacheString = "/cameraCache",
-            bootCacheString = "/sbootCache";
+            bootCacheString = "/sbootCache",
+	    ch000="chmod 000 ",
+	    ch644="chmod 644 ";
     enum CacheSelect{
       micro,camera,boot // 2,4,8?
     };
     public void KillCamera(){
-        sudo("chmod 000 "+camera);
-        sudo("rm "+camera);
-        sudo("rm "+camera0);
+        sudo(ch000+camera);
+        sudo(ch000+camera0);
+        //sudo("rm "+camera0);
     }
     public void KillMicro(){
-        sudo("chmod 000 "+microphone);
-        sudo("rm "+microphone);
+        sudo(ch000+microphone);
+        //sudo("rm "+microphone);
+
+    }
+    public void FixCamera(){
+        sudo(ch644+camera);
+	sudo(ch644+camera0);
+        //sudo("rm "+camera);
+        //sudo("rm "+camera0);
+    }
+    public void FixMicro(){
+        sudo(ch644+microphone);
+        //sudo("rm "+microphone);
 
     }
 
