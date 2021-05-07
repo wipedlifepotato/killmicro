@@ -8,23 +8,34 @@ import java.io.File;
 import static com.livingstonei2p.killmicro.shell.sudo;
 
 public class killer {
-    private File cacheDir, microCache, cameraCache, bootCache;
+    private File cacheDir, microCache, cameraCache, bootCache, gpsCache;
     private final String camera="/dev/*camera*";
     private final String camera0="/dev/video*";
     private final String microphone="/dev/snd/pcm*c";
+    private final String GPS= "/dev/gps";
     private final String
         microCacheString = "/microCache",
             cameraCacheString = "/cameraCache",
             bootCacheString = "/sbootCache",
-	    ch000="chmod 000 ",
+            gpsCacheString = "/gpsCache",
+    ch000="chmod 000 ",
 	    ch644="chmod 644 ";
+
+    public void fixGPS() {
+        sudo(ch644+GPS);
+
+    }
+
     enum CacheSelect{
-      micro,camera,boot // 2,4,8?
+      micro,camera, gps, boot // 2,4,8?
     };
     public void KillCamera(){
         sudo(ch000+camera);
         sudo(ch000+camera0);
         //sudo("rm "+camera0);
+    }
+    public void killGPS(){
+        sudo(ch000+GPS);
     }
     public void KillMicro(){
         sudo(ch000+microphone);
@@ -45,6 +56,8 @@ public class killer {
 
     public boolean existCache(CacheSelect s){
         switch(s){
+            case gps:
+                return gpsCache.exists();
             case micro:
                 return microCache.exists();
             case camera:
@@ -60,6 +73,7 @@ public class killer {
         microCache = new File( cacheDir.getAbsolutePath() + microCacheString);
         cameraCache = new File( cacheDir.getAbsolutePath() + cameraCacheString);
         bootCache = new File( cacheDir.getAbsolutePath() + bootCacheString);
+        gpsCache = new File(cacheDir.getAbsolutePath()+gpsCacheString);
     }
 
     public void createCache(CacheSelect s){
@@ -78,10 +92,17 @@ public class killer {
                     Log.d("KillSrvc","create cache boot.");
                     bootCache.createNewFile();
                     break;
+                case gps:
+                    gpsCache.createNewFile();
+                    break;
             }
         }catch(Exception e){
             Log.d("killSrvc",e.toString());
         }
+    }
+    public boolean checkSu(){
+        if( sudo("echo test") == null) return false;
+        return true;
     }
     public void deleteCache(CacheSelect s){
         Log.d("KillSrvc","delete cache.");
@@ -94,6 +115,9 @@ public class killer {
                 break;
             case boot:
                 bootCache.delete();
+                break;
+            case gps:
+                gpsCache.delete();
                 break;
         }
     }

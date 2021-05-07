@@ -16,6 +16,9 @@ public class BootUpReceiver extends BroadcastReceiver {
             if(k.existCache(killer.CacheSelect.camera)){
                 k.KillCamera();
             }
+            if(k.existCache(killer.CacheSelect.gps)){
+                k.killGPS();
+            }
         }
 
     }

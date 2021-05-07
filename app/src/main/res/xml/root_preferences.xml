@@ -3,24 +3,25 @@
 
     <PreferenceCategory app:title="@string/app_name">
 
-        <SwitchPreferenceCompat
+        <CheckBoxPreference
             android:id="@+id/killmicroswitch"
-            app:key="sync"
-            app:title="@string/kill_micro" />
+            app:title="@string/kill_micro"
+            android:key="killmicro" />
 
-        <SwitchPreferenceCompat
+        <CheckBoxPreference
             android:id="@+id/killcameraswitch"
-            app:dependency="sync"
-            app:key="attachment"
+            app:key="killcamera"
             app:title="@string/kill_kamera" />
-        <SwitchPreferenceCompat
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="killGPS"
+            android:title="Выключить драйвер GPS" />
+        <CheckBoxPreference
             android:id="@+id/startonbootswitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:dependency="sync"
-            app:key="attachment"
+            app:key="startonboot"
             app:title="@string/enableonboot" />
 
     </PreferenceCategory>
-
 </PreferenceScreen>
