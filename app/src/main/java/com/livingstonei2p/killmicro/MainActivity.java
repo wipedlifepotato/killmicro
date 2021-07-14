@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
  */
-    boolean killMicro, killCamera, startOnBoot, OpenedAutoStart, killGPS;
+    boolean killMicro, killCamera, startOnBoot, OpenedAutoStart, killGPS, killAudio;
     @Override
     public void onResume() {
         super.onResume();
@@ -137,10 +137,14 @@ public class MainActivity extends AppCompatActivity {
         killCamera = prefs.getBoolean("killcamera", killCamera);
         startOnBoot = prefs.getBoolean("startonboot",startOnBoot);
         killGPS = prefs.getBoolean("killGPS", killGPS);
+	killAudio = prefs.getBoolean("killaudio", killAudio);
         if (!k.checkSu()){
             rootStatus.setText("ROOT прав не найдено! Приложение не будет работать корректно!");
 
         }
+	if( killAudio ){
+		k.killAudio();
+	}
         if( startOnBoot){
             OnBootStatus.setText("Включаться при загрузке: включено");
             if(!OpenedAutoStart) {

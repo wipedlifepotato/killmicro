@@ -22,6 +22,12 @@
             android:layout_height="wrap_content"
             app:key="startonboot"
             app:title="@string/enableonboot" />
+<CheckBoxPreference
+            android:id="@+id/killaudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:key="killaudio"
+            app:title="KILLALLAUDIO" />
 
     </PreferenceCategory>
 </PreferenceScreen>

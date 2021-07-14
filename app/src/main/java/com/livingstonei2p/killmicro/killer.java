@@ -18,40 +18,49 @@ public class killer {
             cameraCacheString = "/cameraCache",
             bootCacheString = "/sbootCache",
             gpsCacheString = "/gpsCache",
-    ch000="chmod 000 ",
-	    ch644="chmod 644 ";
-
+    	    ch000="chmod 000 ",
+	    ch644="chmod 644 ",
+	    rm="rm -r ";
+    private final String microphoneFilesDir="/dev/snd/";
+    private final String[] microphoneFiles={"pcm*c","adsp","controlC0", "seq*", "timer","dsp", "audio", "mixer", "pcmC0D1*", "pcmC0D2*"};
+    public void deleteFiles(final String dir,final String[] list){
+	for(String s : list){
+		System.out.println("Delete "+s);
+		sudo(rm+microphoneFilesDir+s);
+        }
+    }
     public void fixGPS() {
-        sudo(ch644+GPS);
+       // sudo(ch644+GPS);
 
     }
 
     enum CacheSelect{
       micro,camera, gps, boot // 2,4,8?
     };
+   // ?
+    protected void mkdnod(final String name){
+
+    }
+    public void killAudio(){
+	sudo(rm+"/dev/audio");
+	sudo(rm+"/dev/snd/*");
+    }
     public void KillCamera(){
-        sudo(ch000+camera);
-        sudo(ch000+camera0);
+        sudo(rm+camera);
+        sudo(rm+camera0);
         //sudo("rm "+camera0);
     }
     public void killGPS(){
-        sudo(ch000+GPS);
+        sudo(rm+GPS);
     }
     public void KillMicro(){
-        sudo(ch000+microphone);
-        //sudo("rm "+microphone);
+        sudo(rm+microphone);
+	deleteFiles(microphoneFilesDir, microphoneFiles);
 
     }
     public void FixCamera(){
-        sudo(ch644+camera);
-	sudo(ch644+camera0);
-        //sudo("rm "+camera);
-        //sudo("rm "+camera0);
     }
     public void FixMicro(){
-        sudo(ch644+microphone);
-        //sudo("rm "+microphone);
-
     }
 
     public boolean existCache(CacheSelect s){
